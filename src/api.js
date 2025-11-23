@@ -113,4 +113,15 @@ export const api = {
       }
     }
   },
+
+  /**
+   * Get OpenRouter credits balance and usage information.
+   */
+  async getCredits() {
+    const response = await fetch(`${API_BASE}/api/credits`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch credits');
+    }
+    return response.json();
+  },
 };

@@ -1,0 +1,112 @@
+.credits-display {
+  padding: 16px;
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.credits-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.credits-icon {
+  font-size: 1.2rem;
+}
+
+.credits-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.credits-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.credits-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.credits-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.credits-value {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.credits-remaining {
+  color: var(--accent-color);
+}
+
+.credits-progress-container {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.credits-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.credits-progress-fill {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  border-radius: 3px;
+}
+
+.credits-percentage {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: center;
+  font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.credits-loading,
+.credits-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.credits-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border-color);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.credits-error-text {
+  font-size: 0.8rem;
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDarkMode } from '../DarkModeContext';
 import { useAuth } from '../AuthContext';
+import CreditsDisplay from './CreditsDisplay';
 import './Sidebar.css';
 
 export default function Sidebar({
@@ -15,17 +16,7 @@ export default function Sidebar({
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <div className="sidebar-title-row">
-          <h1>Deven's LLM Council</h1>
-          <button
-            className="dark-mode-toggle"
-            onClick={toggleDarkMode}
-            aria-label="Toggle dark mode"
-            title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {isDarkMode ? '☀️' : '🌙'}
-          </button>
-        </div>
+        <h1 className="sidebar-brand">Deven's LLM Council</h1>
         <button className="new-conversation-btn" onClick={onNewConversation}>
           + New Conversation
         </button>
@@ -55,13 +46,26 @@ export default function Sidebar({
       </div>
 
       <div className="sidebar-footer">
-        <button
-          className="logout-btn"
-          onClick={logout}
-          title="Logout"
-        >
-          🚪 Logout
-        </button>
+        <CreditsDisplay />
+
+        <div className="sidebar-footer-actions">
+          <button
+            className="dark-mode-toggle"
+            onClick={toggleDarkMode}
+            aria-label="Toggle dark mode"
+            title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDarkMode ? '☀️' : '🌙'}
+          </button>
+
+          <button
+            className="logout-btn"
+            onClick={logout}
+            title="Logout"
+          >
+            🚪 Logout
+          </button>
+        </div>
       </div>
     </div>
   );
