@@ -24,10 +24,16 @@ function App() {
 
   const loadConversations = async () => {
     try {
+      console.log('Loading conversations...');
       const convs = await api.listConversations();
+      console.log('Conversations loaded:', convs);
       setConversations(convs);
     } catch (error) {
       console.error('Failed to load conversations:', error);
+      // Show alert for debugging
+      if (conversations.length === 0) {
+        console.error('Initial conversation load failed. Please refresh the page.');
+      }
     }
   };
 
