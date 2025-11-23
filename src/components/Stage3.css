@@ -1,25 +1,73 @@
 .stage3 {
-  background: #f0fff0;
-  border-color: #c8e6c8;
+  background: rgba(72, 187, 120, 0.08);
+  border-color: rgba(72, 187, 120, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+:root.dark-mode .stage3 {
+  background: rgba(72, 187, 120, 0.15);
+  border-color: rgba(72, 187, 120, 0.4);
+}
+
+.stage3-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.copy-button {
+  padding: 8px 16px;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.copy-button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.copy-button:active {
+  transform: translateY(0);
 }
 
 .final-response {
-  background: #ffffff;
+  background: var(--bg-primary);
   padding: 20px;
-  border-radius: 6px;
-  border: 1px solid #c8e6c8;
+  border-radius: 8px;
+  border: 1px solid rgba(72, 187, 120, 0.3);
+  transition: all 0.3s ease;
 }
 
 .chairman-label {
   color: #2d8a2d;
-  font-size: 12px;
-  font-family: monospace;
-  margin-bottom: 12px;
+  font-size: 0.8rem;
+  font-family: 'Monaco', 'Menlo', monospace;
+  margin-bottom: 16px;
   font-weight: 600;
+  padding: 6px 12px;
+  background: rgba(72, 187, 120, 0.1);
+  border-radius: 4px;
+  display: inline-block;
+}
+
+:root.dark-mode .chairman-label {
+  color: #68d391;
+  background: rgba(72, 187, 120, 0.2);
 }
 
 .final-text {
-  color: #333;
+  color: var(--text-primary);
   line-height: 1.7;
-  font-size: 15px;
+  font-size: 1.05rem;
 }
