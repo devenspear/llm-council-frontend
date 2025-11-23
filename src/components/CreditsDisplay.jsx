@@ -77,6 +77,10 @@ export default function CreditsDisplay() {
             rel="noopener noreferrer"
             className="credits-value credits-link"
             title="View detailed usage on OpenRouter"
+            onClick={(e) => {
+              // Fallback for ensuring link works
+              e.stopPropagation();
+            }}
           >
             ${usage.toFixed(2)}
           </a>

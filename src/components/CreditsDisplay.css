@@ -52,17 +52,19 @@
 }
 
 .credits-link {
-  color: var(--accent-color);
+  color: var(--accent-color) !important;
   text-decoration: none;
-  cursor: pointer;
+  cursor: pointer !important;
   transition: all 0.2s ease;
   position: relative;
   padding: 2px 4px;
   border-radius: 4px;
   font-weight: 600;
   font-family: 'Monaco', 'Menlo', monospace;
-  z-index: 1;
-  pointer-events: auto;
+  z-index: 10;
+  pointer-events: auto !important;
+  display: inline-block;
+  user-select: auto;
 }
 
 .credits-link:hover {
