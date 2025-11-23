@@ -11,7 +11,10 @@ export default function ChatInterface({
   isLoading,
 }) {
   const [input, setInput] = useState('');
+  const [textareaHeight, setTextareaHeight] = useState(120);
+  const [isResizing, setIsResizing] = useState(false);
   const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
 
   // Optimized scroll - only scroll when new messages arrive, not on every render
   const prevMessageCount = useRef(0);
@@ -38,6 +41,36 @@ export default function ChatInterface({
       handleSubmit(e);
     }
   };
+
+  const handleMouseDown = (e) => {
+    setIsResizing(true);
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!isResizing) return;
+
+      const newHeight = window.innerHeight - e.clientY - 24;
+      if (newHeight >= 90 && newHeight <= 600) {
+        setTextareaHeight(newHeight);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
 
   if (!conversation) {
     return (
@@ -144,24 +177,63 @@ export default function ChatInterface({
         <div ref={messagesEndRef} />
       </div>
 
-      <form className="input-form" onSubmit={handleSubmit}>
-        <textarea
-          className="message-input"
-          placeholder="Ask your question... (Shift+Enter for new line, Enter to send)"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          disabled={isLoading}
-          rows={3}
-        />
-        <button
-          type="submit"
-          className="send-button"
-          disabled={!input.trim() || isLoading}
+      <div className="input-container">
+        <div
+          className={`resize-handle ${isResizing ? 'resizing' : ''}`}
+          onMouseDown={handleMouseDown}
+          title="Drag to resize"
         >
-          Send
-        </button>
-      </form>
+          <div className="resize-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <form className="input-form" onSubmit={handleSubmit}>
+          <div className="input-wrapper">
+            <textarea
+              ref={textareaRef}
+              className="message-input"
+              placeholder="Ask your question..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              disabled={isLoading}
+              style={{ height: `${textareaHeight}px` }}
+            />
+            <div className="input-footer">
+              <div className="input-hints">
+                <span className="hint-item">
+                  <kbd>⏎</kbd> Send
+                </span>
+                <span className="hint-item">
+                  <kbd>⇧</kbd> + <kbd>⏎</kbd> New line
+                </span>
+                <span className="char-count">
+                  {input.length} characters
+                </span>
+              </div>
+              <button
+                type="submit"
+                className="send-button"
+                disabled={!input.trim() || isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <div className="button-spinner"></div>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Send</span>
+                    <span className="send-icon">→</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
