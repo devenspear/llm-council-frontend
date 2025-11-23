@@ -71,7 +71,15 @@ export default function CreditsDisplay() {
       <div className="credits-info">
         <div className="credits-row">
           <span className="credits-label">Used:</span>
-          <span className="credits-value">${usage.toFixed(2)}</span>
+          <a
+            href="https://openrouter.ai/activity"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="credits-value credits-link"
+            title="View detailed usage on OpenRouter"
+          >
+            ${usage.toFixed(2)}
+          </a>
         </div>
 
         {limit && (

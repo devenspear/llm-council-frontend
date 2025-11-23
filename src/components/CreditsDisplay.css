@@ -49,6 +49,26 @@
   font-family: 'Monaco', 'Menlo', monospace;
 }
 
+.credits-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.credits-link:hover {
+  background: rgba(74, 144, 226, 0.1);
+  text-decoration: underline;
+  transform: translateX(2px);
+}
+
+.credits-link:active {
+  transform: translateX(1px);
+}
+
 .credits-remaining {
   color: var(--accent-color);
 }
