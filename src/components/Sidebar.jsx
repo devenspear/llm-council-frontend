@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDarkMode } from '../DarkModeContext';
+import { useAuth } from '../AuthContext';
 import './Sidebar.css';
 
 export default function Sidebar({
@@ -9,6 +10,7 @@ export default function Sidebar({
   onNewConversation,
 }) {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { logout } = useAuth();
 
   return (
     <div className="sidebar">
@@ -50,6 +52,16 @@ export default function Sidebar({
             </div>
           ))
         )}
+      </div>
+
+      <div className="sidebar-footer">
+        <button
+          className="logout-btn"
+          onClick={logout}
+          title="Logout"
+        >
+          🚪 Logout
+        </button>
       </div>
     </div>
   );

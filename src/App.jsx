@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatInterface from './components/ChatInterface';
+import LoginPage from './components/LoginPage';
+import { useAuth } from './AuthContext';
 import { api } from './api';
 import './App.css';
 
 function App() {
+  const { isAuthenticated } = useAuth();
   const [conversations, setConversations] = useState([]);
   const [currentConversationId, setCurrentConversationId] = useState(null);
   const [currentConversation, setCurrentConversation] = useState(null);
@@ -189,6 +192,11 @@ function App() {
       setIsLoading(false);
     }
   };
+
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
 
   return (
     <div className="app">
