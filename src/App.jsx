@@ -42,14 +42,17 @@ function App() {
 
   const handleNewConversation = async () => {
     try {
+      console.log('Creating new conversation...');
       const newConv = await api.createConversation();
+      console.log('New conversation created:', newConv);
       setConversations([
-        { id: newConv.id, created_at: newConv.created_at, message_count: 0 },
+        { id: newConv.id, created_at: newConv.created_at, title: newConv.title, message_count: 0 },
         ...conversations,
       ]);
       setCurrentConversationId(newConv.id);
     } catch (error) {
       console.error('Failed to create conversation:', error);
+      alert(`Failed to create conversation: ${error.message}`);
     }
   };
 
