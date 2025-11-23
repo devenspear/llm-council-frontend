@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { api } from '../api';
 import Stage1 from './Stage1';
 import Stage2 from './Stage2';
 import Stage3 from './Stage3';
+import ModelSelector from './ModelSelector';
 import './ChatInterface.css';
 
 export default function ChatInterface({
@@ -13,8 +15,26 @@ export default function ChatInterface({
   const [input, setInput] = useState('');
   const [textareaHeight, setTextareaHeight] = useState(120);
   const [isResizing, setIsResizing] = useState(false);
+  const [selectedModels, setSelectedModels] = useState([]);
+  const [allModels, setAllModels] = useState([]);
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
+
+  // Load available models and select all by default
+  useEffect(() => {
+    const fetchModels = async () => {
+      try {
+        const data = await api.getModels();
+        const models = data.council_models || [];
+        setAllModels(models);
+        setSelectedModels(models); // All selected by default
+      } catch (err) {
+        console.error('Failed to fetch models:', err);
+      }
+    };
+
+    fetchModels();
+  }, []);
 
   // Optimized scroll - only scroll when new messages arrive, not on every render
   const prevMessageCount = useRef(0);
@@ -28,8 +48,8 @@ export default function ChatInterface({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (input.trim() && !isLoading) {
-      onSendMessage(input);
+    if (input.trim() && !isLoading && selectedModels.length > 0) {
+      onSendMessage(input, selectedModels);
       setInput('');
     }
   };
@@ -40,6 +60,16 @@ export default function ChatInterface({
       e.preventDefault();
       handleSubmit(e);
     }
+  };
+
+  const handleModelToggle = (model) => {
+    setSelectedModels(prev => {
+      if (prev.includes(model)) {
+        return prev.filter(m => m !== model);
+      } else {
+        return [...prev, model];
+      }
+    });
   };
 
   const handleMouseDown = (e) => {
@@ -203,6 +233,10 @@ export default function ChatInterface({
             />
             <div className="input-footer">
               <div className="input-hints">
+                <ModelSelector
+                  selectedModels={selectedModels}
+                  onModelToggle={handleModelToggle}
+                />
                 <span className="hint-item">
                   <kbd>⏎</kbd> Send
                 </span>
@@ -216,7 +250,7 @@ export default function ChatInterface({
               <button
                 type="submit"
                 className="send-button"
-                disabled={!input.trim() || isLoading}
+                disabled={!input.trim() || isLoading || selectedModels.length === 0}
               >
                 {isLoading ? (
                   <>

@@ -72,9 +72,15 @@ export const api = {
    * @param {string} conversationId - The conversation ID
    * @param {string} content - The message content
    * @param {function} onEvent - Callback function for each event: (eventType, data) => void
+   * @param {Array<string>} selectedModels - Optional array of model IDs to use
    * @returns {Promise<void>}
    */
-  async sendMessageStream(conversationId, content, onEvent) {
+  async sendMessageStream(conversationId, content, onEvent, selectedModels = null) {
+    const body = { content };
+    if (selectedModels && selectedModels.length > 0) {
+      body.selected_models = selectedModels;
+    }
+
     const response = await fetch(
       `${API_BASE}/api/conversations/${conversationId}/message/stream`,
       {
@@ -82,7 +88,7 @@ export const api = {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify(body),
       }
     );
 
@@ -121,6 +127,17 @@ export const api = {
     const response = await fetch(`${API_BASE}/api/credits`);
     if (!response.ok) {
       throw new Error('Failed to fetch credits');
+    }
+    return response.json();
+  },
+
+  /**
+   * Get available council models.
+   */
+  async getModels() {
+    const response = await fetch(`${API_BASE}/api/models`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch models');
     }
     return response.json();
   },

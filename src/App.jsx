@@ -69,7 +69,7 @@ function App() {
     setCurrentConversationId(id);
   };
 
-  const handleSendMessage = async (content) => {
+  const handleSendMessage = async (content, selectedModels = null) => {
     if (!currentConversationId) return;
 
     setIsLoading(true);
@@ -101,7 +101,7 @@ function App() {
         messages: [...prev.messages, assistantMessage],
       }));
 
-      // Send message with streaming
+      // Send message with streaming (pass selectedModels as 4th parameter)
       await api.sendMessageStream(currentConversationId, content, (eventType, event) => {
         switch (eventType) {
           case 'stage1_start':
@@ -181,7 +181,7 @@ function App() {
           default:
             console.log('Unknown event type:', eventType);
         }
-      });
+      }, selectedModels);
     } catch (error) {
       console.error('Failed to send message:', error);
       // Remove optimistic messages on error
