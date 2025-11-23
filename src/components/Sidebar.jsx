@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useDarkMode } from '../DarkModeContext';
 import './Sidebar.css';
 
 export default function Sidebar({
@@ -7,10 +8,22 @@ export default function Sidebar({
   onSelectConversation,
   onNewConversation,
 }) {
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
+
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <h1>Deven's LLM Council</h1>
+        <div className="sidebar-title-row">
+          <h1>Deven's LLM Council</h1>
+          <button
+            className="dark-mode-toggle"
+            onClick={toggleDarkMode}
+            aria-label="Toggle dark mode"
+            title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDarkMode ? '☀️' : '🌙'}
+          </button>
+        </div>
         <button className="new-conversation-btn" onClick={onNewConversation}>
           + New Conversation
         </button>
