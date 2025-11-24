@@ -15,6 +15,7 @@
   right: 24px;
   width: 48px;
   height: 48px;
+  min-height: 48px;
   border-radius: 50%;
   border: 2px solid var(--border-color);
   background: var(--bg-secondary);
@@ -25,12 +26,17 @@
   justify-content: center;
   transition: all 0.3s ease;
   z-index: 10;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .login-dark-mode-toggle:hover {
   background: var(--bg-tertiary);
   border-color: var(--accent-color);
   transform: rotate(20deg) scale(1.1);
+}
+
+.login-dark-mode-toggle:active {
+  transform: scale(0.95);
 }
 
 .login-container {
@@ -128,6 +134,7 @@
 
 .login-button {
   padding: 14px 24px;
+  min-height: 44px;
   background: var(--accent-color);
   border: none;
   border-radius: 10px;
@@ -141,6 +148,7 @@
   justify-content: center;
   gap: 10px;
   margin-top: 8px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .login-button:hover:not(:disabled) {
@@ -150,7 +158,7 @@
 }
 
 .login-button:active:not(:disabled) {
-  transform: translateY(0);
+  transform: scale(0.98);
 }
 
 .login-button:disabled {

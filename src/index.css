@@ -42,13 +42,25 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   background: var(--bg-secondary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
+  /* iOS-specific optimizations */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: 100%;
+  /* Safe area support for iOS */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+html {
+  height: -webkit-fill-available;
 }
 
 #root {
   height: 100vh;
+  height: -webkit-fill-available;
   width: 100vw;
   overflow: hidden;
 }
@@ -122,4 +134,35 @@ body {
   padding-left: 16px;
   border-left: 4px solid #ddd;
   color: #666;
+}
+
+/* iOS Mobile Optimizations */
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .markdown-content {
+    font-size: 1rem;
+    padding: 8px;
+  }
+
+  .markdown-content pre {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Touch-friendly scrolling for iOS */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent zoom on input focus (iOS) */
+input, textarea, select {
+  font-size: 16px !important;
 }

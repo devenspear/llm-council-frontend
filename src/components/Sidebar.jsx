@@ -12,12 +12,41 @@ export default function Sidebar({
 }) {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const { logout } = useAuth();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+  const toggleMobileSidebar = () => {
+    setIsMobileOpen(!isMobileOpen);
+  };
+
+  const handleSelectConversation = (convId) => {
+    onSelectConversation(convId);
+    setIsMobileOpen(false);
+  };
+
+  const handleNewConversation = () => {
+    onNewConversation();
+    setIsMobileOpen(false);
+  };
 
   return (
-    <div className="sidebar">
+    <>
+      <button
+        className="mobile-menu-btn"
+        onClick={toggleMobileSidebar}
+        aria-label="Toggle menu"
+      >
+        ☰
+      </button>
+
+      <div
+        className={`sidebar-overlay ${isMobileOpen ? 'visible' : ''}`}
+        onClick={toggleMobileSidebar}
+      />
+
+      <div className={`sidebar ${isMobileOpen ? 'mobile-open' : ''}`}>
       <div className="sidebar-header">
         <h1 className="sidebar-brand">Deven's LLM Council</h1>
-        <button className="new-conversation-btn" onClick={onNewConversation}>
+        <button className="new-conversation-btn" onClick={handleNewConversation}>
           + New Conversation
         </button>
       </div>
@@ -32,7 +61,7 @@ export default function Sidebar({
               className={`conversation-item ${
                 conv.id === currentConversationId ? 'active' : ''
               }`}
-              onClick={() => onSelectConversation(conv.id)}
+              onClick={() => handleSelectConversation(conv.id)}
             >
               <div className="conversation-title">
                 {conv.title || 'New Conversation'}
@@ -68,5 +97,6 @@ export default function Sidebar({
         </div>
       </div>
     </div>
+    </>
   );
 }
